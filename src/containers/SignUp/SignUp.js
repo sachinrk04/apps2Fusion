@@ -28,7 +28,7 @@ class SignUp extends Component {
 
     onChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
-        console.log(this.state);  
+        // console.log(this.state);  
       }
     render() {
         let errorMessage = null;

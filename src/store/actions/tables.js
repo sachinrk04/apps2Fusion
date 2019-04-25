@@ -7,11 +7,17 @@ export const tablesStart = () => {
     }
 }
 
-export const tablesSuccess = (id, tableData) => {
+export const tablesSuccess = (data) => {
     return {
         type: actionTypes.TABLES_SUCCESS,
-        tableId: id,
-        tableData: tableData
+        userId: data.userId,
+        first_name: data.first_name,
+        last_name: data.last_name,
+        date_of_birth: data.date_of_birth,
+        joining_date: data.joining_date,
+        qualification: data.qualification,
+        role: data.role,
+        
     };
 };
 
@@ -22,19 +28,29 @@ export const tablesFail = (error) => {
     };
 };
 
-export const tables = (tableData, token) => {
+export const tables = (data, token) => {
     return dispatch => {
         dispatch(tablesStart());
-        axios.post('https://apps-two-fusion.firebaseio.com/tables.json?auth=' + token, tableData) 
+
+        let tableData = {
+            first_name: data.first_name,
+            last_name: data.last_name,
+            date_of_birth: data.date_of_birth,
+            joining_date: data.joining_date,
+            qualification: data.qualification,
+            role: data.role,
+        }
+
+        const url = `https://apps-two-fusion.firebaseio.com/tables.json`
+        axios.post(url, tableData) 
             .then(response => { 
-                console.log(response);
+                // console.log(response);
                 dispatch( tablesSuccess( response.data.name, tableData ) );
             })
             .catch(error => {
-                console.log(error);
+                // console.log(error);
                 dispatch( tablesFail( error ) );
             });
-        // console.log(this.props.ingredients);
     };
 };
 
